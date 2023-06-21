@@ -1,22 +1,22 @@
-package database_go_test
+package database_go
 
 import (
 	"database/sql"
-	"testing"
-
-	_ "github.com/go-sql-driver/mysql"
+	"time"
 )
 
-func TestKosongan(t *testing.T) {
-
-}
-
-func TestOpenConnectionDatabase(t *testing.T) {
+func GetConnection() *sql.DB {
 	db, err := sql.Open("mysql", "root:root2adminthistimearound@tcp(localhost:3306)/belajar_golang_database") // return 2 value db dan err
 	if err != nil {
 		panic(err) // kalo error display errornya apa
 	}
 
-	defer db.Close() // menutup object sql.DB
+	// ini database poolingnya, ada 4 settings ini aja
+	db.SetMaxIdleConns(10)
+	db.SetMaxOpenConns(100)
+	db.SetConnMaxIdleTime(10 * time.Minute)
+	db.SetConnMaxLifetime(90 * time.Minute)
+
 	// menggunakan DB
+	return db
 }
