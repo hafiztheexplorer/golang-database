@@ -6,7 +6,9 @@ import (
 )
 
 func GetConnection() *sql.DB {
-	db, err := sql.Open("mysql", "root:root2adminthistimearound@tcp(localhost:3306)/belajar_golang_database") // return 2 value db dan err
+	db, err := sql.Open("mysql", "root:root2adminthistimearound@tcp(localhost:3306)/belajar_golang_database?parseTime=true")
+	// return 2 value db dan err.
+	// ?parseTime=true digunakan untuk konversi date agar tidak jadi []uint di Go nya.
 	if err != nil {
 		panic(err) // kalo error display errornya apa
 	}
